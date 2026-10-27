@@ -96,6 +96,27 @@ A run that stops on its budget also says:
 
 The report starts with your question, the budget, the spend, the run time and how many sources it quotes.
 
+### How this research was done
+
+Every run keeps a step-by-step record of how Phoenix researched your question, built from the run's own records: what it planned, which agents it sent and why, what each agent found, what the independent check confirmed, which disagreements it found and how they were settled, and why it stopped. Each step has the minute it happened, counted from the start of the run.
+
+- While a run is going, `check_run` shows the latest few steps.
+- The short report sums up the process in a few lines.
+- The full report ends with a section called "How this research was done" that lists the steps. A very long run shows its first and last steps and says how many are not shown.
+
+Each step is one of these kinds:
+
+| Kind | What it records |
+|---|---|
+| `planned` | How the question was split into workstreams, and each one's share of the budget |
+| `decided` | Each research round: what was known, how many important findings were verified, how many important questions were still open, the budget and time left, and how many proposed agents were sent and why the others were not, or why the research stopped |
+| `sent` | An agent sent to work, with its search and its estimated cost |
+| `returned` | An agent finished: how many pages it read, how many findings it made with quotes, and how many quotes were dropped because they were not found word for word on the page |
+| `checked` | An independent model checked an agent's findings against their quotes |
+| `disagreement` | Two findings disagreed, and how the disagreement was settled |
+| `stopped` | The research stopped, and why |
+| `assembled` | The report was written: how many findings it has and how many sources it quotes |
+
 ## Limits and money
 
 - When a run starts, its budget is held from your balance. When it ends, you pay only what it spent, and the rest is returned to your balance.
