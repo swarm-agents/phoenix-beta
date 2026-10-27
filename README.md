@@ -1,8 +1,8 @@
-# Phoenix private beta: getting started with Claude Code
+# Phoenix private beta: getting started
 
-Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, as a connector with six tools.
+Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code or Grok, as a connector with six tools. The steps below are for Claude Code; for Grok, see [Using Phoenix from Grok](#using-phoenix-from-grok).
 
-You need Claude Code installed and signed in, and an invitation from the Phoenix team.
+You need Claude Code installed and signed in (or a Grok account), and an invitation from the Phoenix team.
 
 ## 1. Add the connector
 
@@ -44,6 +44,21 @@ For example:
 > Use phoenix to estimate a run with a $3 budget, then start it on this question: ...
 
 A run takes about 15 to 25 minutes. Ask Claude to check on it every few minutes, then ask for the short report, and the full one if you want every claim and its source.
+
+## Using Phoenix from Grok
+
+Phoenix also works as a custom connector in Grok.
+
+1. Go to grok.com/connectors, choose **New Connector**, then **Custom**.
+2. Enter the connector address: `https://phoenix-staging-gzuqcv2lrq-ey.a.run.app/mcp`
+3. Grok opens the Phoenix sign-in page. If you already use Phoenix from Claude Code, sign in with the same login: your credits belong to that login, and a different one starts a new account with a zero balance. New to Phoenix? Sign in with any of the options and keep using that one.
+4. Ask Grok:
+
+   > Use the phoenix whoami tool and show my account id and balance.
+
+   If your balance is zero, send the account id to the Phoenix team member who invited you, as in "3. Get your beta credits" above.
+
+On Grok Business or Enterprise, a team admin must add the connector before members can use it.
 
 ## Example questions
 
@@ -131,6 +146,7 @@ Each step is one of these kinds:
 - We keep your questions, reports, sources and spend for the duration of the beta. Only the Phoenix team can read them, and we delete them on request.
 - The $20 beta credit is free, has no cash value and expires when the beta ends.
 - Your question and the pages it leads to are processed by these providers: OpenRouter (which routes the model calls), Anthropic, Amazon Bedrock, Google, DeepInfra, CoreWeave and AtlasCloud (which run the models), Exa (search) and Firecrawl (page fetching). Default routing is not limited to EU regions.
+- The assistant you connect from (such as Claude Code or Grok) also sees your questions and reports, under its own terms.
 - Your account, questions and reports are stored in Frankfurt (Neon, Google Cloud); sign-in is handled by WorkOS.
 
 ## Help
