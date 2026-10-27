@@ -22,7 +22,7 @@ Ask Claude:
 
 > Use the phoenix whoami tool and show my account id.
 
-Send that account id to the Phoenix team member who invited you. We add $20 of beta credits to your account. Until then, your account has a zero balance and runs are refused.
+Send that account id to the Phoenix team member who invited you. We add $20 of beta credits to your account. Until then, your account has a zero balance and runs are refused. Ask for `whoami` again at any time to see your balance.
 
 Buying credits yourself with `buy_credits` is not switched on yet; until it is, the team adds your credits.
 
@@ -32,7 +32,7 @@ Ask Claude in plain words. It calls the tools for you:
 
 | Tool | What it does | Costs credits |
 |---|---|---|
-| `whoami` | Shows your account id, monthly cap and per-run limit | No |
+| `whoami` | Shows your account id, your balance, your monthly cap and how much of it is left, and your per-run limit | No |
 | `estimate_run` | Checks a budget against your balance and limits, and says whether a run would start | No |
 | `start_run` | Starts a run on your question with the budget you give, and returns a run id | Holds the budget |
 | `check_run` | Shows a run's progress and spend so far | No |
