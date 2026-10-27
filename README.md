@@ -1,6 +1,6 @@
 # Phoenix private beta: getting started with Claude Code
 
-Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, as a connector with four tools.
+Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, as a connector with six tools.
 
 You need Claude Code installed and signed in, and an invitation from the Phoenix team.
 
@@ -14,7 +14,7 @@ claude mcp add --transport http phoenix https://phoenix-staging-gzuqcv2lrq-ey.a.
 
 ## 2. Sign in
 
-Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 5 tools.
+Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 6 tools.
 
 ## 3. Get your beta credits
 
@@ -24,16 +24,20 @@ Ask Claude:
 
 Send that account id to the Phoenix team member who invited you. We add $20 of beta credits to your account. Until then, your account has a zero balance and runs are refused.
 
+Buying credits yourself with `buy_credits` is not switched on yet; until it is, the team adds your credits.
+
 ## 4. Research a question
 
 Ask Claude in plain words. It calls the tools for you:
 
 | Tool | What it does | Costs credits |
 |---|---|---|
+| `whoami` | Shows your account id, monthly cap and per-run limit | No |
 | `estimate_run` | Checks a budget against your balance and limits, and says whether a run would start | No |
 | `start_run` | Starts a run on your question with the budget you give, and returns a run id | Holds the budget |
 | `check_run` | Shows a run's progress and spend so far | No |
 | `get_report` | Returns the finished report, short or full | No |
+| `buy_credits` | Returns a Stripe payment link for $10, $20 or $50 of credits. Not switched on yet: during the beta, the team adds your credits | Only if you pay |
 
 For example:
 
