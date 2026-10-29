@@ -132,7 +132,25 @@ Each step is one of these kinds:
 | `stopped` | The research stopped, and why |
 | `assembled` | The report was written: how many findings it has and how many sources it quotes |
 
+## Templates
+
+Ask your assistant which AI models meet a set of rules, and it calls Phoenix's `check_models` tool. Phoenix keeps a catalogue of models and the hosts that run them, and checks them against one of five templates or rules you give:
+
+- EU processing (`eu_processing`): Your requests are processed only inside the EU.
+- Confidential (`confidential`): The host neither trains on your data nor keeps it.
+- EU regulated (`eu_regulated`): EU processing, no training on your data, and a developer not headquartered in China.
+- Open weights (`open_weights`): A model whose weights are published and whose licence allows commercial use.
+- Budget ceiling (`budget_ceiling`): A low-cost model: at most $0.50 in and $1.50 out per million tokens.
+
+Every result shows the rules in plain words and, for each model on each host, each rule's outcome with the quote it rests on and the date that value was last checked:
+
+- **pass**: the catalogue holds a statement for this case, and its value meets the rule.
+- **fail**: the catalogue holds a statement for this case, and its value breaks the rule.
+- **unknown**: the catalogue holds no usable statement for this case; an unknown counts as a fail (the check fails closed), so a model is in only when every rule passes.
+
 ## Limits and money
+
+- Checking models against templates or rules is free: each account can make up to 100 catalogue checks per day (the count resets at 00:00 UTC).
 
 - When a run starts, its budget is held from your balance. When it ends, you pay only what it spent, and the rest is returned to your balance.
 - Per-run limit: a single run can hold at most $10.
