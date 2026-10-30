@@ -1,8 +1,8 @@
 # Phoenix private beta: getting started
 
-Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code or Grok, as a connector with six tools. The steps below are for Claude Code; for Grok, see [Using Phoenix from Grok](#using-phoenix-from-grok).
+Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, the Claude desktop app or Grok, as a connector with six tools. The steps below are for Claude Code; for the desktop app, see [Using Phoenix from the Claude desktop app](#using-phoenix-from-the-claude-desktop-app), and for Grok, [Using Phoenix from Grok](#using-phoenix-from-grok).
 
-You need Claude Code installed and signed in (or a Grok account), and an invitation from the Phoenix team.
+You need Claude Code installed and signed in (or the Claude desktop app, or a Grok account), and an invitation from the Phoenix team.
 
 ## 1. Add the connector
 
@@ -44,6 +44,21 @@ For example:
 > Use phoenix to estimate a run with a $3 budget, then start it on this question: ...
 
 A run takes about 15 to 25 minutes. Ask Claude to check on it every few minutes, then ask for the short report, and the full one if you want every claim and its source.
+
+## Using Phoenix from the Claude desktop app
+
+Phoenix also works as a custom connector in the Claude desktop app. The same steps work on claude.ai in a browser.
+
+1. Open the connector settings and choose **Add custom connector**.
+2. Enter a name, such as `Phoenix`, and the MCP server URL: `https://phoenix-staging-gzuqcv2lrq-ey.a.run.app/mcp`. Choose **Continue**.
+3. The Phoenix sign-in page opens. If you already use Phoenix from Claude Code or Grok, sign in with the same login: your credits belong to that login, and a different one starts a new account with a zero balance.
+4. In a new chat, ask Claude:
+
+   > Use the Phoenix whoami tool and show my account id and balance.
+
+   If your balance is zero, send the account id to the Phoenix team member who invited you, as in "3. Get your beta credits" above.
+
+Each app you connect from is its own connection, with its own $50 monthly cap, on the same account and balance. On a Claude Team or Enterprise plan, an owner may need to allow custom connectors first.
 
 ## Using Phoenix from Grok
 
@@ -165,7 +180,7 @@ Every result shows the rules in plain words and, for each model on each host, ea
 - We keep your questions, reports, sources and spend for the duration of the beta. Only the Phoenix team can read them, and we delete them on request.
 - The $20 beta credit is free, has no cash value and expires when the beta ends.
 - Your question and the pages it leads to are processed by these providers: OpenRouter (which routes the model calls), Anthropic, Amazon Bedrock, Google, DeepInfra, CoreWeave and AtlasCloud (which run the models), Exa (search) and Firecrawl (page fetching). Default routing is not limited to EU regions.
-- The assistant you connect from (such as Claude Code or Grok) also sees your questions and reports, under its own terms.
+- The assistant you connect from (such as Claude Code, the Claude desktop app or Grok) also sees your questions and reports, under its own terms.
 - Your account, questions and reports are stored in Frankfurt (Neon, Google Cloud); sign-in is handled by WorkOS.
 
 ## Help
