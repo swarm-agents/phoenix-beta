@@ -103,6 +103,7 @@ Once a run has stopped, its stop reason says why, in one of these words:
 | finished: no further research worth its cost | No research left was worth what it would cost |
 | finished: all planned research done | Every planned piece of research was done |
 | finished: interrupted before it was done | The run was interrupted by a problem on our side |
+| finished: the research planner failed twice; the report covers the work done | The step that plans the research failed twice; Phoenix wrote the report from what was already found |
 | cancelled: the run did not start, so nothing was charged | The run could not be started |
 
 A run that stops on its budget also says:
