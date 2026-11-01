@@ -1,6 +1,6 @@
 # Phoenix private beta: getting started
 
-Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, the Claude desktop app or Grok, as a connector with six tools. The steps below are for Claude Code; for the desktop app, see [Using Phoenix from the Claude desktop app](#using-phoenix-from-the-claude-desktop-app), and for Grok, [Using Phoenix from Grok](#using-phoenix-from-grok).
+Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, the Claude desktop app or Grok, as a connector with eleven tools. The steps below are for Claude Code; for the desktop app, see [Using Phoenix from the Claude desktop app](#using-phoenix-from-the-claude-desktop-app), and for Grok, [Using Phoenix from Grok](#using-phoenix-from-grok).
 
 You need Claude Code installed and signed in (or the Claude desktop app, or a Grok account), and an invitation from the Phoenix team.
 
@@ -14,7 +14,7 @@ claude mcp add --transport http phoenix https://phoenix-staging-gzuqcv2lrq-ey.a.
 
 ## 2. Sign in
 
-Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 6 tools.
+Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 11 tools.
 
 ## 3. Get your beta credits
 
@@ -38,6 +38,8 @@ Ask Claude in plain words. It calls the tools for you:
 | `check_run` | Shows a run's progress and spend so far | No |
 | `get_report` | Returns the finished report, short or full | No |
 | `buy_credits` | Returns a Stripe payment link for $10, $20 or $50 of credits. Not switched on yet: during the beta, the team adds your credits | Only if you pay |
+
+The other five tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `list_threads`, `get_thread` and `send_message`, for chat in threads, which is coming soon: until it is switched on, `send_message` answers that chat is switched off.
 
 For example:
 
@@ -163,6 +165,23 @@ Every result shows the rules in plain words and, for each model on each host, ea
 - **pass**: the catalogue holds a statement for this case, and its value meets the rule.
 - **fail**: the catalogue holds a statement for this case, and its value breaks the rule.
 - **unknown**: the catalogue holds no usable statement for this case; an unknown counts as a fail (the check fails closed), so a model is in only when every rule passes.
+
+## Plan where a prompt goes
+
+Before Phoenix's chat is switched on, you can already see where a prompt would go and what it would cost. Ask your assistant, for example:
+
+> Use phoenix plan_route for this prompt, with replies of up to 2,000 tokens: ...
+
+Phoenix answers with four choices, each with the model, the host that would run it and the most the call could cost:
+
+- **Cheapest**: the lowest price that passes your rules.
+- **Balanced**: the middle model by price.
+- **Private**: the cheapest host that neither trains on your data nor keeps it.
+- **Best**: the cheapest of the models Phoenix lists as top quality for this kind of task.
+
+Each price is the most the call can cost: every token of your prompt plus the longest reply you allow, rounded up to a whole cent. For each model left out, Phoenix says which rule left it out. Phoenix also checks your prompt for personal data (IBANs, card numbers, email addresses and phone numbers) and reports the kinds and counts it found; when it finds any, it recommends Private and lists it first. You can add a template or your own rules, as with `check_models`.
+
+`plan_route` is free. It calls no model and sends your prompt nowhere, and Phoenix neither stores nor logs the prompt.
 
 ## Limits and money
 
