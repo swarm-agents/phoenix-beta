@@ -190,7 +190,7 @@ Chat sends your message to one model and returns its whole reply. It suits a qui
 | Tool | What it does | Costs credits |
 |---|---|---|
 | `send_message` | Sends a message on the route you choose and returns the reply with its proof. Without a thread id it starts a new thread; with one, it continues that thread | Holds the route's "at most", then charges what the provider billed |
-| `list_threads` | Lists your threads, newest first, with each one's last model and what its replies were charged | No |
+| `list_threads` | Lists your threads, newest first, with each one's last model and what its replies were charged, and what all your threads were charged this calendar month (UTC), with how many of this month's costs are not known yet | No |
 | `get_thread` | Shows a thread's messages, oldest first, each reply with its proof | No |
 
 How a message is charged:
