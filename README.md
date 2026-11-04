@@ -1,6 +1,6 @@
 # Phoenix private beta: getting started
 
-Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, the Claude desktop app or Grok, as a connector with eleven tools. The steps below are for Claude Code; for the desktop app, see [Using Phoenix from the Claude desktop app](#using-phoenix-from-the-claude-desktop-app), and for Grok, [Using Phoenix from Grok](#using-phoenix-from-grok).
+Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, the Claude desktop app or Grok, as a connector with eleven tools. The steps below are for Claude Code; for the desktop app, see [Using Phoenix from the Claude desktop app](#using-phoenix-from-the-claude-desktop-app), and for Grok, [Using Phoenix from Grok](#using-phoenix-from-grok). Phoenix can also chat with one model at a time, from the connector or in your browser: see [Chat in threads](#chat-in-threads) and [Using Phoenix in your browser](#using-phoenix-in-your-browser).
 
 You need Claude Code installed and signed in (or the Claude desktop app, or a Grok account), and an invitation from the Phoenix team.
 
@@ -39,7 +39,7 @@ Ask Claude in plain words. It calls the tools for you:
 | `get_report` | Returns the finished report, short or full | No |
 | `buy_credits` | Returns a Stripe payment link for $10, $20 or $50 of credits. Not switched on yet: during the beta, the team adds your credits | Only if you pay |
 
-The other five tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `list_threads`, `get_thread` and `send_message`, for chat in threads, which is coming soon: until it is switched on, `send_message` answers that chat is switched off.
+The other five tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `list_threads` and `get_thread`, for chat (see [Chat in threads](#chat-in-threads)).
 
 For example:
 
@@ -168,7 +168,7 @@ Every result shows the rules in plain words and, for each model on each host, ea
 
 ## Plan where a prompt goes
 
-Before Phoenix's chat is switched on, you can already see where a prompt would go and what it would cost. Ask your assistant, for example:
+Before you send a chat message, you can see where it would go and what it would cost. Ask your assistant, for example:
 
 > Use phoenix plan_route for this prompt, with replies of up to 2,000 tokens: ...
 
@@ -181,7 +181,49 @@ Phoenix answers with four choices, each with the model, the host that would run 
 
 Each price is the most the call can cost: every token of your prompt plus the longest reply you allow, rounded up to a whole cent. For each model left out, Phoenix says which rule left it out. Phoenix also checks your prompt for personal data (IBANs, card numbers, email addresses and phone numbers) and reports the kinds and counts it found; when it finds any, it recommends Private and lists it first. You can add a template or your own rules, as with `check_models`.
 
-`plan_route` is free. It calls no model and sends your prompt nowhere, and Phoenix neither stores nor logs the prompt.
+`plan_route` is free. It calls no model and sends your prompt nowhere, and Phoenix neither stores nor logs the prompt. Given a thread, it prices your message as it would be sent in that thread, with the thread's recent messages.
+
+## Chat in threads
+
+Chat sends your message to one model and returns its whole reply. It suits a quick answer; for a question that needs claims with sources and quotes, start a research run instead. Each conversation is a thread, and your threads are private to you.
+
+| Tool | What it does | Costs credits |
+|---|---|---|
+| `send_message` | Sends a message on the route you choose and returns the reply with its proof. Without a thread id it starts a new thread; with one, it continues that thread | Holds the route's "at most", then charges what the provider billed |
+| `list_threads` | Lists your threads, newest first, with each one's last model and what its replies were charged | No |
+| `get_thread` | Shows a thread's messages, oldest first, each reply with its proof | No |
+
+How a message is charged:
+
+- **The route.** You choose one of the four routes `plan_route` shows: Cheapest, Balanced, Private or Best. Phoenix plans the route again when the message is sent, so the model, the host and the price are for exactly what is sent.
+- **The hold.** Before the message is sent, the route's "at most" is held from your balance: every token sent plus the longest reply you allow (2,048 tokens unless you ask for another length, up to 8,192).
+- **The charge.** When the reply is done, you are charged what the provider billed for it, never more than the hold. The rest of the hold returns to your balance.
+- **The proof.** Every reply has a proof: the model, the host that ran it, what was held and what was charged.
+- **A cost not known yet.** If a reply's cost is not known yet (for example, the reply was cut off or the provider answered with an error), its whole hold stays held until the cost arrives. If it has not arrived after 7 days, the hold is charged, and the proof says so. If the provider could not be reached, nothing is charged.
+- **Continuing a thread.** The model sees the thread's recent messages as well as your new one, and the price covers the whole conversation sent, not only the new message. So each message in a long thread costs more than the first. In a very long thread, the oldest messages are left out.
+
+Ask your assistant, for example:
+
+> Use phoenix plan_route for this prompt, then send it with send_message on the Cheapest route: ...
+
+> Continue my last phoenix thread on the Private route: ...
+
+> Use phoenix list_threads and show what each thread has cost.
+
+> Use phoenix get_thread on my last thread and show each reply's proof.
+
+## Using Phoenix in your browser
+
+Phoenix also has a web app for chat: https://phoenix-staging-gzuqcv2lrq-ey.a.run.app/app/
+
+- **Sign in.** Choose **Continue with Google**, with the same Google account you use for the connector: it is the same login, so you see the same balance. A different account starts a new one with a zero balance.
+- **Home.** Type your prompt. Under it, the **Run plan** shows the four routes, each with its price, model and host, and updates as you type. It also says whether your prompt holds personal data; when it does ("personal data found"), Private is marked recommended and listed first. Choose a route and press **Run**. In the web app, a route's "at most" is called the estimate, and the plan says so: "the charge never exceeds the estimate". The reply opens in a new thread.
+- **Thread.** Your messages and the replies, oldest first. Under each reply, a line shows what was estimated and what was charged. Choose **proof** on that line, or **Proof** at the top, to open the Proof panel: each reply's model, host, status, estimate and charge, and the thread totals (**Charged**, **Estimated** and **Models**). When the model changes between replies, a handoff line marks it. To continue the thread, type in the box at the bottom; its run plan prices your message with the thread.
+- **Threads list.** **Recent** in the side bar lists your threads with the last model, the cost and when each was updated, and a search by title. A cost not known yet is marked.
+- **Credits.** Your balance, the web app's monthly cap, what is left this month and the limit per message or run. Buying credits is not switched on yet.
+- **Dark mode and phone.** The web app follows your device's light or dark setting, and works on a phone, where the Proof panel opens from the bottom of the screen.
+
+The web app is its own connection, with its own $50 monthly cap, on the same account and balance.
 
 ## Limits and money
 
@@ -191,6 +233,8 @@ Each price is the most the call can cost: every token of your prompt plus the lo
 - Per-run limit: a single run can hold at most $10.
 - Each connection can spend at most $50 per calendar month.
 - In the beta, a run is charged at cost: what its model calls, searches and page fetches cost.
+- Chat counts against the same limits as research runs: a message's hold must fit within the per-run limit, and the holds of chat and runs together count against the connection's monthly cap. A message that would go past either is refused, with the numbers, and nothing is held.
+- A chat message is charged what the provider billed for it, never more than its hold.
 
 ## Beta terms
 
@@ -199,6 +243,7 @@ Each price is the most the call can cost: every token of your prompt plus the lo
 - We keep your questions, reports, sources and spend for the duration of the beta. Only the Phoenix team can read them, and we delete them on request.
 - The $20 beta credit is free, has no cash value and expires when the beta ends.
 - Your question and the pages it leads to are processed by these providers: OpenRouter (which routes the model calls), Anthropic, Amazon Bedrock, Google, DeepInfra, CoreWeave and AtlasCloud (which run the models), Exa (search) and Firecrawl (page fetching). Default routing is not limited to EU regions.
+- In chat, your messages go through OpenRouter to the host the route you choose picks, which can be any host in Phoenix's model catalogue: a longer list than for research, including OpenAI, Azure, Mistral, Groq and others. Each reply's proof names its host.
 - The assistant you connect from (such as Claude Code, the Claude desktop app or Grok) also sees your questions and reports, under its own terms.
 - Your account, questions and reports are stored in Frankfurt (Neon, Google Cloud); sign-in is handled by WorkOS.
 
