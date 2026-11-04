@@ -240,7 +240,7 @@ The web app is its own connection, with its own $50 monthly cap, on the same acc
 
 - This is a beta. There is no uptime promise, and runs may fail.
 - A run that fails to start costs nothing. A run that stops early is charged only what it spent.
-- We keep your questions, reports, sources and spend for the duration of the beta. Only the Phoenix team can read them, and we delete them on request.
+- We keep your questions, reports, sources, chat threads and spend for the duration of the beta. Only the Phoenix team can read them, and we delete them on request.
 - The $20 beta credit is free, has no cash value and expires when the beta ends.
 - Your question and the pages it leads to are processed by these providers: OpenRouter (which routes the model calls), Anthropic, Amazon Bedrock, Google, DeepInfra, CoreWeave and AtlasCloud (which run the models), Exa (search) and Firecrawl (page fetching). Default routing is not limited to EU regions.
 - In chat, your messages go through OpenRouter to the host the route you choose picks, which can be any host in Phoenix's model catalogue: a longer list than for research, including OpenAI, Azure, Mistral, Groq and others. Each reply's proof names its host.
