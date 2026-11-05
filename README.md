@@ -89,6 +89,8 @@ Phoenix works best on questions with facts that can be checked against sources: 
 
 A budget of $3 to $5 suits most questions; a broader question can use up to the $10 per-run limit.
 
+Each run follows a fixed plan: one call splits your question into topics and questions, research agents search the web and quote what they find, an independent model checks each finding against its quote, findings that disagree are settled, and the report is written. Phoenix sizes each step from your budget and the time limit, and returns what it does not spend.
+
 ## What you'll see
 
 `check_run` and `get_report` show the run's state, one of:
@@ -116,7 +118,7 @@ Once a run has stopped, its stop reason says why, in one of these words:
 | finished: question answered | The agents checked enough claims to answer the question |
 | finished: budget used | The budget ran out |
 | finished: time limit reached | The run reached its time limit |
-| finished: maximum research rounds reached | Phoenix researches in rounds, up to 12 per run, and this run used all of them |
+| finished: maximum research rounds reached | Phoenix researched in rounds, up to 12 per run, and this run used all of them (only when Phoenix plans in rounds; today's runs follow a fixed plan) |
 | finished: no further research worth its cost | No research left was worth what it would cost |
 | finished: all planned research done | Every planned piece of research was done |
 | finished: interrupted before it was done | The run was interrupted by a problem on our side |
@@ -131,7 +133,7 @@ The report starts with your question, the budget, the spend, the run time and ho
 
 ### How this research was done
 
-Every run keeps a step-by-step record of how Phoenix researched your question, built from the run's own records: what it planned, which agents it sent and why, what each agent found, what the independent check confirmed, which disagreements it found and how they were settled, and why it stopped. Each step has the minute it happened, counted from the start of the run.
+Every run keeps a step-by-step record of how Phoenix researched your question, built from the run's own records: what it planned, which agents it sent, what each agent found, what the independent check confirmed, which disagreements it found and how they were settled, and why it stopped. Each step has the minute it happened, counted from the start of the run.
 
 - While a run is going, `check_run` shows the latest few steps.
 - The short report sums up the process in a few lines.
@@ -141,8 +143,8 @@ Each step is one of these kinds:
 
 | Kind | What it records |
 |---|---|
-| `planned` | How the question was split into workstreams, and each one's share of the budget |
-| `decided` | Each research round: what was known, how many important findings were verified, how many important questions were still open, the budget and time left, and how many proposed agents were sent and why the others were not, or why the research stopped |
+| `planned` | How the question was split into workstreams |
+| `decided` | Only when Phoenix plans in rounds, which today's runs do not. Each research round: what was known, how many important findings were verified, how many important questions were still open, the budget and time left, and how many proposed agents were sent and why the others were not, or why the research stopped |
 | `sent` | An agent sent to work, with its search and its estimated cost |
 | `returned` | An agent finished: how many pages it read, how many findings it made with quotes, and how many quotes were dropped because they were not found word for word on the page |
 | `checked` | An independent model checked an agent's findings against their quotes |
@@ -172,12 +174,11 @@ Before you send a chat message, you can see where it would go and what it would 
 
 > Use phoenix plan_route for this prompt, with replies of up to 2,000 tokens: ...
 
-Phoenix answers with four choices, each with the model, the host that would run it and the most the call could cost:
+Phoenix answers with three choices, each with the model, the host that would run it and the most the call could cost:
 
+- **Optimal**: the lowest price among the models Phoenix lists as top quality for this kind of task.
 - **Cheapest**: the lowest price that passes your rules.
-- **Balanced**: the middle model by price.
 - **Private**: the cheapest host that neither trains on your data nor keeps it.
-- **Best**: the cheapest of the models Phoenix lists as top quality for this kind of task.
 
 Each price is the most the call can cost: every token of your prompt plus the longest reply you allow, rounded up to a whole cent. For each model left out, Phoenix says which rule left it out. Phoenix also checks your prompt for personal data (IBANs, card numbers, email addresses and phone numbers) and reports the kinds and counts it found; when it finds any, it recommends Private and lists it first. You can add a template or your own rules, as with `check_models`.
 
@@ -195,7 +196,7 @@ Chat sends your message to one model and returns its whole reply. It suits a qui
 
 How a message is charged:
 
-- **The route.** You choose one of the four routes `plan_route` shows: Cheapest, Balanced, Private or Best. Phoenix plans the route again when the message is sent, so the model, the host and the price are for exactly what is sent.
+- **The route.** You choose one of the three routes `plan_route` shows: Optimal, Cheapest or Private. Phoenix plans the route again when the message is sent, so the model, the host and the price are for exactly what is sent.
 - **The hold.** Before the message is sent, the route's "at most" is held from your balance: every token sent plus the longest reply you allow (2,048 tokens unless you ask for another length, up to 8,192).
 - **The charge.** When the reply is done, you are charged what the provider billed for it, never more than the hold. The rest of the hold returns to your balance.
 - **The proof.** Every reply has a proof: the model, the host that ran it, what was held and what was charged.
@@ -217,10 +218,10 @@ Ask your assistant, for example:
 Phoenix also has a web app for chat: https://phoenix-staging-gzuqcv2lrq-ey.a.run.app/app/
 
 - **Sign in.** Choose **Continue with Google**, with the same Google account you use for the connector: it is the same login, so you see the same balance. A different account starts a new one with a zero balance.
-- **Home.** Type your prompt. Under it, the **Run plan** shows the four routes, each with its price, model and host, and updates as you type. It also says whether your prompt holds personal data; when it does ("personal data found"), Private is marked recommended and listed first. Choose a route and press **Run**. In the web app, a route's "at most" is called the estimate, and the plan says so: "the charge never exceeds the estimate". The reply opens in a new thread.
+- **Home.** Type your prompt. Under it, the **Run plan** shows the three routes, each with its price, model and host. It appears once your prompt is complete (a few words, not ending mid-phrase) and you pause typing, and updates as you change it. It also says whether your prompt holds personal data; when it does ("personal data found"), Private is marked recommended and listed first. Optimal is selected unless Private is recommended; choose a route and press **Run**. In the web app, a route's "at most" is called the estimate, and the plan says so: "the charge never exceeds the estimate". The reply opens in a new thread.
 - **Thread.** Your messages and the replies, oldest first. Under each reply, a line shows what was estimated and what was charged. Choose **proof** on that line, or **Proof** at the top, to open the Proof panel: each reply's model, host, status, estimate and charge, and the thread totals (**Charged**, **Estimated** and **Models**). When the model changes between replies, a handoff line marks it. To continue the thread, type in the box at the bottom; its run plan prices your message with the thread.
 - **Threads list.** **Recent** in the side bar lists your threads with the last model, the cost and when each was updated, and a search by title. A cost not known yet is marked.
-- **Credits.** Your balance, the web app's monthly cap, what is left this month and the limit per message or run. Buying credits is not switched on yet.
+- **Billing and credits.** Open it from your balance at the top or your name in the side bar: your balance, what this month has counted against the web app's monthly cap, the per-run cap and what you spent this month. **Add credits** (also at the top of Home) pays by card through Stripe's own page; until buying is switched on, it says so. The workspace's owner can change the monthly cap; runs and replies stop at it, and it resets on the 1st (UTC).
 - **Dark mode and phone.** The web app follows your device's light or dark setting, and works on a phone, where the Proof panel opens from the bottom of the screen.
 
 The web app is its own connection, with its own $50 monthly cap, on the same account and balance.
