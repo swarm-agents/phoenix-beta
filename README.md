@@ -197,7 +197,7 @@ Chat sends your message to one model and returns its whole reply. It suits a qui
 How a message is charged:
 
 - **The route.** You choose one of the three routes `plan_route` shows: Optimal, Cheapest or Private. Phoenix plans the route again when the message is sent, so the model, the host and the price are for exactly what is sent.
-- **The hold.** Before the message is sent, the route's "at most" is held from your balance: every token sent plus the longest reply you allow (2,048 tokens unless you ask for another length, up to 8,192).
+- **The hold.** Before the message is sent, the route's "at most" is held from your balance: every token sent plus the longest reply you allow (4,096 tokens unless you ask for another length, up to 8,192).
 - **The charge.** When the reply is done, you are charged what the provider billed for it, rounded up to a whole cent, never more than the hold. So the smallest charge is $0.01, even for a reply the provider billed at a fraction of a cent. The rest of the hold returns to your balance.
 - **The proof.** Every reply has a proof: the model, the host that ran it, what was held and what was charged.
 - **A cost not known yet.** If a reply's cost is not known yet (for example, the reply was cut off or the provider answered with an error), its whole hold stays held until the cost arrives. If it has not arrived after 7 days, the hold is charged, and the proof says so. If the provider could not be reached, nothing is charged.
