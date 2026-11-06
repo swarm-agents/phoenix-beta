@@ -14,7 +14,7 @@ claude mcp add --transport http phoenix https://phoenix-staging-gzuqcv2lrq-ey.a.
 
 ## 2. Sign in
 
-Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 11 tools.
+Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 14 tools.
 
 ## 3. Get your beta credits
 
@@ -39,7 +39,7 @@ Ask Claude in plain words. It calls the tools for you:
 | `get_report` | Returns the finished report, short or full | No |
 | `buy_credits` | Returns a Stripe payment link for $10, $20 or $50 of credits. Not switched on yet: during the beta, the team adds your credits | Only if you pay |
 
-The other five tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `list_threads` and `get_thread`, for chat (see [Chat in threads](#chat-in-threads)).
+The other five tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `list_threads` and `get_thread`, for chat (see [Chat in threads](#chat-in-threads)). Three more look after the apps connected to your account: `list_connections`, and `revoke_connection` and `allow_connection` for its owner. A revoked app is refused, even if it connects again, until you allow it.
 
 For example:
 
