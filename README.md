@@ -215,9 +215,9 @@ Ask your assistant, for example:
 
 ## Using Phoenix in your browser
 
-Phoenix also has a web app for chat: https://phoenix-staging-gzuqcv2lrq-ey.a.run.app/app/
+Phoenix also has a web app for chat: https://phoenix.swarm.app/app/
 
-- **Sign in.** Choose **Continue with Google**, with the same Google account you use for the connector: it is the same login, so you see the same balance. A different account starts a new one with a zero balance.
+- **Sign in.** Choose **Continue with Google**, with the same Google account you use for the connector: it is the same login, so you see the same balance. A different account starts a new one with a zero balance. You stay signed in when you reload the page, open a link to a thread, or come back from paying. You're signed out after 12 hours without using the web app, after 7 days in any case, or when you choose **Sign out** in the side bar.
 - **Home.** Type your prompt. Under it, the **Run plan** shows the three routes, each with its price, model and host. It appears once your prompt is complete (a few words, not ending mid-phrase) and you pause typing, and updates as you change it. It also says whether your prompt holds personal data; when it does ("personal data found"), Private is marked recommended and listed first. Optimal is selected unless Private is recommended; choose a route and press **Run**. In the web app, a route's "at most" is called the estimate, and the plan says so: "the charge never exceeds the estimate". The reply opens in a new thread.
 - **Thread.** Your messages and the replies, oldest first. Under each reply, a line shows what was estimated and what was charged. Choose **proof** on that line, or **Proof** at the top, to open the Proof panel: each reply's model, host, status, estimate and charge, and the thread totals (**Charged**, **Estimated** and **Models**). When the model changes between replies, a handoff line marks it. To continue the thread, type in the box at the bottom; its run plan prices your message with the thread.
 - **Threads list.** **Recent** in the side bar lists your threads with the last model, the cost and when each was updated, and a search by title. A cost not known yet is marked.
