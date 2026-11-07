@@ -14,7 +14,7 @@ claude mcp add --transport http phoenix https://phoenix-staging-gzuqcv2lrq-ey.a.
 
 ## 2. Sign in
 
-Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 11 tools.
+Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 14 tools.
 
 ## 3. Get your beta credits
 
@@ -24,7 +24,7 @@ Ask Claude:
 
 Send that account id to the Phoenix team member who invited you. We add $20 of beta credits to your account. Until then, your account has a zero balance and runs are refused. Ask for `whoami` again at any time to see your balance.
 
-Buying credits yourself with `buy_credits` is not switched on yet; until it is, the team adds your credits.
+You can also buy credits yourself with `buy_credits`. During the beta, Stripe runs in test mode, so no real payment is taken; the team explains in Slack how to try it.
 
 ## 4. Research a question
 
@@ -37,9 +37,9 @@ Ask Claude in plain words. It calls the tools for you:
 | `start_run` | Starts a run on your question with the budget you give, and returns a run id | Holds the budget |
 | `check_run` | Shows a run's progress and spend so far | No |
 | `get_report` | Returns the finished report, short or full | No |
-| `buy_credits` | Returns a Stripe payment link for $10, $20 or $50 of credits. Not switched on yet: during the beta, the team adds your credits | Only if you pay |
+| `buy_credits` | Returns a Stripe payment link for $10, $20 or $50 of credits; they're added once Stripe confirms the payment. During the beta, Stripe runs in test mode, so no real payment is taken | Only if you pay |
 
-The other five tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `list_threads` and `get_thread`, for chat (see [Chat in threads](#chat-in-threads)).
+The other five tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `list_threads` and `get_thread`, for chat (see [Chat in threads](#chat-in-threads)). Three more look after the apps connected to your account: `list_connections`, and `revoke_connection` and `allow_connection` for its owner. A revoked app is refused, even if it connects again, until you allow it.
 
 For example:
 
@@ -221,7 +221,7 @@ Phoenix also has a web app for chat: https://phoenix.swarm.app/app/
 - **Home.** Type your prompt. Under it, the **Run plan** shows the three routes, each with its price, model and host. It appears once your prompt is complete (a few words, not ending mid-phrase) and you pause typing, and updates as you change it. It also says whether your prompt holds personal data; when it does ("personal data found"), Private is marked recommended and listed first. Optimal is selected unless Private is recommended; choose a route and press **Run**. In the web app, a route's "at most" is called the estimate, and the plan says so: "the charge never exceeds the estimate". The reply opens in a new thread.
 - **Thread.** Your messages and the replies, oldest first. Under each reply, a line shows what was estimated and what was charged. Choose **proof** on that line, or **Proof** at the top, to open the Proof panel: each reply's model, host, status, estimate and charge, and the thread totals (**Charged**, **Estimated** and **Models**). When the model changes between replies, a handoff line marks it. To continue the thread, type in the box at the bottom; its run plan prices your message with the thread.
 - **Threads list.** **Recent** in the side bar lists your threads with the last model, the cost and when each was updated, and a search by title. A cost not known yet is marked.
-- **Billing and credits.** Open it from your balance at the top or your name in the side bar: your balance, what this month has counted against the web app's monthly cap, the per-run cap and what you spent this month. **Add credits** (also at the top of Home) pays by card through Stripe's own page; until buying is switched on, it says so. The workspace's owner can change the monthly cap; runs and replies stop at it, and it resets on the 1st (UTC).
+- **Billing and credits.** Open it from your balance at the top or your name in the side bar: your balance, what this month has counted against the web app's monthly cap, the per-run cap and what you spent this month. **Add credits** (also at the top of Home) pays through Stripe's own page, and you come back to Billing with the credits added. During the beta, Stripe runs in test mode, so no real payment is taken. The workspace's owner can change the monthly cap; runs and replies stop at it, and it resets on the 1st (UTC).
 - **Dark mode and phone.** The web app follows your device's light or dark setting, and works on a phone, where the Proof panel opens from the bottom of the screen.
 
 The web app is its own connection, with its own $50 monthly cap, on the same account and balance.
