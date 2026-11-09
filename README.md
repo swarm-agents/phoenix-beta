@@ -87,7 +87,7 @@ Phoenix works best on questions with facts that can be checked against sources: 
 - What subsidies are available in 2026 for installing a heat pump in Germany, Austria and the Czech Republic, how much do they pay, and who is eligible?
 - How do the published uptime commitments and service credits of the largest cloud object-storage services compare?
 
-A budget of $3 to $5 suits most questions; a broader question can use up to the $10 per-run limit. The smallest budget a run accepts is $3: below that, a run cannot afford to check what it finds.
+A budget of $3 to $5 suits most questions; a broader question can use up to the $10 per-run limit. The smallest budget a run accepts is $2.25: below that, a run cannot afford to check what it finds.
 
 Each run follows a fixed plan: one call splits your question into topics and questions, research agents search the web and quote what they find, an independent model checks each finding against its quote, findings that disagree are settled, and the report is written. Phoenix sizes each step from your budget and the time limit, and returns what it does not spend.
 
