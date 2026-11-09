@@ -186,7 +186,7 @@ Each price is the most the call can cost: every token of your prompt plus the lo
 
 ## Chat in threads
 
-Chat sends your message to one model and returns its whole reply. It suits a quick answer; for a question that needs claims with sources and quotes, start a research run instead. Each conversation is a thread, and your threads are private to you.
+Chat sends your message to one model and returns its whole reply. It suits a quick answer; for a question that needs claims with sources and quotes, start a research run instead. Each conversation is a thread, and your threads are private to you until you share one (see **Sharing a thread** below).
 
 | Tool | What it does | Costs credits |
 |---|---|---|
@@ -222,6 +222,8 @@ Phoenix also has a web app for chat: https://phoenix.swarm.app/app/
 - **Thread.** Your messages and the replies, oldest first. Under each reply, a line shows what was estimated and what was charged. Choose **proof** on that line, or **Proof** at the top, to open the Proof panel: each reply's model, host, status, estimate and charge, and the thread totals (**Charged**, **Estimated** and **Models**). When the model changes between replies, a handoff line marks it. To continue the thread, type in the box at the bottom; its run plan prices your message with the thread.
 - **Threads list.** **Recent** in the side bar lists your threads with the last model, the cost and when each was updated, and a search by title. A cost not known yet is marked.
 - **Billing and credits.** Open it from your balance at the top or your name in the side bar: your balance, what this month has counted against the web app's monthly cap, the per-run cap and what you spent this month. **Add credits** (also at the top of Home) pays through Stripe's own page, and you come back to Billing with the credits added. During the beta, Stripe runs in test mode, so no real payment is taken. The workspace's owner can change the monthly cap; runs and replies stop at it, and it resets on the 1st (UTC).
+- **Sharing a thread.** In a thread, choose **Share**. Type someone's email address and choose **Share**: they can read the whole thread, including earlier prompts, and prompt in it. A thread can be shared with up to 10 people, and you can share with up to 20 people a day. They get an email from noreply@mg.swarm.app with a link to the thread, and must sign in with that email address to open it. Under **General access**, **Anyone with the link** gives you a link to copy instead: anyone who signs in with it can join, until it expires (7 days), you choose **Reset link** (which makes a new link and turns the old one off) or you switch back to **Private**. To remove someone, set their role to **Remove**. Threads shared with you are under **Shared with me** in the threads list; to leave one, open **Share** in it and choose **Leave thread**.
+- **Who pays in a shared thread.** Each person pays for their own prompts from their own balance, never the owner's. So someone you share with needs credits of their own to prompt: with a zero balance they can read the thread, but their prompts are refused until they add credits. Each reply's line says whose balance it was charged to.
 - **Dark mode and phone.** The web app follows your device's light or dark setting, and works on a phone, where the Proof panel opens from the bottom of the screen.
 
 The web app is its own connection, with its own $50 monthly cap, on the same account and balance.
