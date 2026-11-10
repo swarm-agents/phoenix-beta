@@ -176,11 +176,11 @@ Before you send a chat message, you can see where it would go and what it would 
 
 Phoenix answers with three choices, each with the model, the host that would run it and the most the call could cost:
 
-- **Optimal**: the lowest price among the models Phoenix lists as top quality for this kind of task.
+- **Balanced**: the lowest price among the models Phoenix lists as top quality for this kind of task.
 - **Cheapest**: the lowest price that passes your rules.
 - **Private**: the cheapest host that neither trains on your data nor keeps it.
 
-Each price is the most the call can cost: every token of your prompt plus the longest reply you allow, rounded up to a whole cent. For each model left out, Phoenix says which rule left it out. Phoenix also checks your prompt for personal data (IBANs, card numbers, email addresses and phone numbers) and reports the kinds and counts it found; when it finds any, it recommends Private and lists it first. You can add a template or your own rules, as with `check_models`.
+Each price is the most the call can cost: every token of your prompt plus the longest reply you allow, rounded up to a whole cent. For each model left out, Phoenix says which rule left it out. It also lists every other model and host that passes, with the most each could cost, cheapest first, so you can choose one yourself. Phoenix also checks your prompt for personal data (IBANs, card numbers, email addresses and phone numbers) and reports the kinds and counts it found; when it finds any, it recommends Private and lists it first. You can add a template or your own rules, as with `check_models`.
 
 `plan_route` is free. It calls no model and sends your prompt nowhere, and Phoenix neither stores nor logs the prompt. Given a thread, it prices your message as it would be sent in that thread, with the thread's recent messages.
 
@@ -196,7 +196,7 @@ Chat sends your message to one model and returns its whole reply. It suits a qui
 
 How a message is charged:
 
-- **The route.** You choose one of the three routes `plan_route` shows: Optimal, Cheapest or Private. Phoenix plans the route again when the message is sent, so the model, the host and the price are for exactly what is sent.
+- **The route.** You choose one of the three routes `plan_route` shows: Balanced, Cheapest or Private. Or you choose another model and host from the list `plan_route` shows. Phoenix plans it again when the message is sent, so the model, the host and the price are for exactly what is sent; if the model you chose no longer passes or has no current price, the message is refused and nothing is charged.
 - **The hold.** Before the message is sent, the route's "at most" is held from your balance: every token sent plus the longest reply you allow (4,096 tokens unless you ask for another length, up to 8,192).
 - **The charge.** When the reply is done, you are charged what the provider billed for it, rounded up to a whole cent, never more than the hold. So the smallest charge is $0.01, even for a reply the provider billed at a fraction of a cent. The rest of the hold returns to your balance.
 - **The proof.** Every reply has a proof: the model, the host that ran it, what was held and what was charged.
@@ -209,6 +209,8 @@ Ask your assistant, for example:
 
 > Continue my last phoenix thread on the Private route: ...
 
+> Use phoenix plan_route for this prompt, then send it with send_message to Mistral Large from the list: ...
+
 > Use phoenix list_threads and show what each thread has cost.
 
 > Use phoenix get_thread on my last thread and show each reply's proof.
@@ -218,7 +220,7 @@ Ask your assistant, for example:
 Phoenix also has a web app for chat: https://phoenix.swarm.app/app/
 
 - **Sign in.** Choose **Continue with Google**, with the same Google account you use for the connector: it is the same login, so you see the same balance. A different account starts a new one with a zero balance. You stay signed in when you reload the page, open a link to a thread, or come back from paying. You're signed out after 12 hours without using the web app, after 7 days in any case, or when you choose **Sign out** in the side bar.
-- **Home.** Type your prompt. Under it, the **Run plan** shows the three routes, each with its price, model and host. It appears once your prompt is complete (a few words, not ending mid-phrase) and you pause typing, and updates as you change it. It also says whether your prompt holds personal data; when it does ("personal data found"), Private is marked recommended and listed first. Optimal is selected unless Private is recommended; choose a route and press **Run**. In the web app, a route's "at most" is called the estimate, and the plan says so: "the charge never exceeds the estimate". The reply opens in a new thread.
+- **Home.** Type your prompt. Under it, the **Run plan** shows the three routes, each with its price, model and host. It appears once your prompt is complete (a few words, not ending mid-phrase) and you pause typing, and updates as you change it. It also says whether your prompt holds personal data; when it does ("personal data found"), Private is marked recommended and listed first. Balanced is selected unless Private is recommended; choose a route and press **Run**. In the web app, a route's "at most" is called the estimate, and the plan says so: "the charge never exceeds the estimate". The reply opens in a new thread.
 - **Thread.** Your messages and the replies, oldest first. Under each reply, a line shows what was estimated and what was charged. Choose **proof** on that line, or **Proof** at the top, to open the Proof panel: each reply's model, host, status, estimate and charge, and the thread totals (**Charged**, **Estimated** and **Models**). When the model changes between replies, a handoff line marks it. To continue the thread, type in the box at the bottom; its run plan prices your message with the thread.
 - **Threads list.** **Recent** in the side bar lists your threads with the last model, the cost and when each was updated, and a search by title. A cost not known yet is marked.
 - **Billing and credits.** Open it from your balance at the top or your name in the side bar: your balance, what you've spent this month against your monthly cap (every research run and reply you started, from any app), the per-run cap, and spend by member. **Add credits** (also at the top of Home) pays through Stripe's own page, and you come back to Billing with the credits added. It's a real card payment; Stripe may show and charge it in your own currency, and the credits are the dollar amount you chose. As the workspace's owner you can change your monthly cap; runs and replies stop at it, and it resets on the 1st (UTC).
