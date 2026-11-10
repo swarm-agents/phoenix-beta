@@ -32,7 +32,7 @@ Ask Claude in plain words. It calls the tools for you:
 
 | Tool | What it does | Costs credits |
 |---|---|---|
-| `whoami` | Shows your account id, your balance, your monthly cap and how much of it is left, and your per-run limit | No |
+| `whoami` | Shows your account id, your balance, this connection's monthly limit and how much of it is left, and your per-run limit | No |
 | `estimate_run` | Checks a budget against your balance and limits, and says whether a run would start | No |
 | `start_run` | Starts a run on your question with the budget you give, and returns a run id | Holds the budget |
 | `check_run` | Shows a run's progress and spend so far | No |
@@ -60,7 +60,7 @@ Phoenix also works as a custom connector in the Claude desktop app. The same ste
 
    If your balance is zero, send the account id to the Phoenix team member who invited you, as in "3. Get your beta credits" above.
 
-Each app you connect from is its own connection, with its own $50 monthly cap, on the same account and balance. On a Claude Team or Enterprise plan, an owner may need to allow custom connectors first.
+Each app you connect from is its own connection, on the same account and balance. Your monthly cap ($50 to start) counts everything you start, from every app; each connection also stops at its own $50 a month, so one leaked app can't use up your month. On a Claude Team or Enterprise plan, an owner may need to allow custom connectors first.
 
 ## Using Phoenix from Grok
 
@@ -221,12 +221,12 @@ Phoenix also has a web app for chat: https://phoenix.swarm.app/app/
 - **Home.** Type your prompt. Under it, the **Run plan** shows the three routes, each with its price, model and host. It appears once your prompt is complete (a few words, not ending mid-phrase) and you pause typing, and updates as you change it. It also says whether your prompt holds personal data; when it does ("personal data found"), Private is marked recommended and listed first. Optimal is selected unless Private is recommended; choose a route and press **Run**. In the web app, a route's "at most" is called the estimate, and the plan says so: "the charge never exceeds the estimate". The reply opens in a new thread.
 - **Thread.** Your messages and the replies, oldest first. Under each reply, a line shows what was estimated and what was charged. Choose **proof** on that line, or **Proof** at the top, to open the Proof panel: each reply's model, host, status, estimate and charge, and the thread totals (**Charged**, **Estimated** and **Models**). When the model changes between replies, a handoff line marks it. To continue the thread, type in the box at the bottom; its run plan prices your message with the thread.
 - **Threads list.** **Recent** in the side bar lists your threads with the last model, the cost and when each was updated, and a search by title. A cost not known yet is marked.
-- **Billing and credits.** Open it from your balance at the top or your name in the side bar: your balance, what this month has counted against the web app's monthly cap, the per-run cap and what you spent this month. **Add credits** (also at the top of Home) pays through Stripe's own page, and you come back to Billing with the credits added. It's a real card payment; Stripe may show and charge it in your own currency, and the credits are the dollar amount you chose. The workspace's owner can change the monthly cap; runs and replies stop at it, and it resets on the 1st (UTC).
+- **Billing and credits.** Open it from your balance at the top or your name in the side bar: your balance, what you've spent this month against your monthly cap (every research run and reply you started, from any app), the per-run cap, and spend by member. **Add credits** (also at the top of Home) pays through Stripe's own page, and you come back to Billing with the credits added. It's a real card payment; Stripe may show and charge it in your own currency, and the credits are the dollar amount you chose. As the workspace's owner you can change your monthly cap; runs and replies stop at it, and it resets on the 1st (UTC).
 - **Sharing a thread.** In a thread, choose **Share**. Type someone's email address and choose **Share**: they can read the whole thread, including earlier prompts, and prompt in it. A thread can be shared with up to 10 people, and you can share with up to 20 people a day. They get an email from noreply@mg.swarm.app with a link to the thread, and must sign in with that email address to open it. Under **General access**, **Anyone with the link** gives you a link to copy instead: anyone who signs in with it can join, until it expires (7 days), you choose **Reset link** (which makes a new link and turns the old one off) or you switch back to **Private**. To remove someone, set their role to **Remove**. Threads shared with you are under **Shared with me** in the threads list; to leave one, open **Share** in it and choose **Leave thread**.
 - **Who pays in a shared thread.** Each person pays for their own prompts from their own balance, never the owner's. So someone you share with needs credits of their own to prompt: with a zero balance they can read the thread, but their prompts are refused until they add credits. Each reply's line says whose balance it was charged to.
 - **Dark mode and phone.** The web app follows your device's light or dark setting, and works on a phone, where the Proof panel opens from the bottom of the screen.
 
-The web app is its own connection, with its own $50 monthly cap, on the same account and balance.
+The web app is its own connection, on the same account, balance and monthly cap.
 
 ## Limits and money
 
@@ -234,9 +234,9 @@ The web app is its own connection, with its own $50 monthly cap, on the same acc
 
 - When a run starts, its budget is held from your balance. When it ends, you pay only what it spent, and the rest is returned to your balance.
 - Per-run limit: a single run can hold at most $10.
-- Each connection can spend at most $50 per calendar month.
+- Your monthly cap ($50 to start) counts everything you start, from every app, per calendar month (UTC); each connection also stops at $50 a month.
 - In the beta, a run is charged at cost: what its model calls, searches and page fetches cost.
-- Chat counts against the same limits as research runs: a message's hold must fit within the per-run limit, and the holds of chat and runs together count against the connection's monthly cap. A message that would go past either is refused, with the numbers, and nothing is held.
+- Chat counts against the same limits as research runs: a message's hold must fit within the per-run limit, and the holds of chat and runs together count against your monthly cap and the connection's own $50. A message that would go past either is refused, with the numbers, and nothing is held.
 - A chat message is charged what the provider billed for it, rounded up to a whole cent, never more than its hold.
 
 ## Beta terms
