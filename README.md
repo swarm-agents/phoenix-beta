@@ -14,7 +14,7 @@ claude mcp add --transport http phoenix https://phoenix-staging-gzuqcv2lrq-ey.a.
 
 ## 2. Sign in
 
-Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 14 tools.
+Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 15 tools.
 
 ## 3. Get your beta credits
 
@@ -39,7 +39,7 @@ Ask Claude in plain words. It calls the tools for you:
 | `get_report` | Returns the finished report, short or full | No |
 | `buy_credits` | Returns a Stripe payment link for $10, $20 or $50 of credits; they're added once Stripe confirms the payment. It's a real card payment | Only if you pay |
 
-The other five tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `list_threads` and `get_thread`, for chat (see [Chat in threads](#chat-in-threads)). Three more look after the apps connected to your account: `list_connections`, and `revoke_connection` and `allow_connection` for its owner. A revoked app is refused, even if it connects again, until you allow it.
+The other six tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `list_threads`, `get_thread` and `rename_thread`, for chat (see [Chat in threads](#chat-in-threads)). Three more look after the apps connected to your account: `list_connections`, and `revoke_connection` and `allow_connection` for its owner. A revoked app is refused, even if it connects again, until you allow it.
 
 For example:
 
@@ -193,6 +193,7 @@ Chat sends your message to one model and returns its whole reply. It suits a qui
 | `send_message` | Sends a message on the route you choose and returns the reply with its proof. Without a thread id it starts a new thread; with one, it continues that thread | Holds the route's "at most", then charges what the provider billed, rounded up to a whole cent |
 | `list_threads` | Lists your threads, newest first, with each one's last model and what its replies were charged, and what all your threads were charged this calendar month (UTC), with how many of this month's costs are not known yet | No |
 | `get_thread` | Shows a thread's messages, oldest first, each reply with its proof | No |
+| `rename_thread` | Renames one of your threads (its owner only; a thread shared with you can't be renamed) | No |
 
 How a message is charged:
 
@@ -221,7 +222,7 @@ Phoenix also has a web app for chat: https://phoenix.swarm.app/app/
 
 - **Sign in.** Choose **Continue with Google**, with the same Google account you use for the connector: it is the same login, so you see the same balance. A different account starts a new one with a zero balance. You stay signed in when you reload the page, open a link to a thread, or come back from paying. You're signed out after 12 hours without using the web app, after 7 days in any case, or when you choose **Sign out** in the side bar.
 - **Home.** Type your prompt. Under it, the **Run plan** shows the three routes, each with its price, model and host. It appears once your prompt is complete (a few words, not ending mid-phrase) and you pause typing, and updates as you change it. It also says whether your prompt holds personal data; when it does ("personal data found"), Private is marked recommended and listed first. Balanced is selected unless Private is recommended; choose a route and press **Run**. In the web app, a route's "at most" is called the estimate, and the plan says so: "the charge never exceeds the estimate". The reply opens in a new thread.
-- **Thread.** Your messages and the replies, oldest first. Under each reply, a line shows what was estimated and what was charged. Choose **proof** on that line, or **Proof** at the top, to open the Proof panel: each reply's model, host, status, estimate and charge, and the thread totals (**Charged**, **Estimated** and **Models**). When the model changes between replies, a handoff line marks it. To continue the thread, type in the box at the bottom; its run plan prices your message with the thread.
+- **Thread.** Your messages and the replies, oldest first. Under each reply, a line shows what was estimated and what was charged. Choose **proof** on that line, or **Proof** at the top, to open the Proof panel: each reply's model, host, status, estimate and charge, and the thread totals (**Charged**, **Estimated** and **Models**). When the model changes between replies, a handoff line marks it. To continue the thread, type in the box at the bottom; its run plan prices your message with the thread. To rename a thread you own, click its title at the top, type the new name and press Enter (Esc keeps the old one); Phoenix keeps the name you choose.
 - **Threads list.** **Recent** in the side bar lists your threads with the last model, the cost and when each was updated, and a search by title. A cost not known yet is marked.
 - **Billing and credits.** Open it from your balance at the top or your name in the side bar: your balance, what you've spent this month against your monthly cap (every research run and reply you started, from any app), the per-run cap, and spend by member. **Add credits** (also at the top of Home) pays through Stripe's own page, and you come back to Billing with the credits added. It's a real card payment; Stripe may show and charge it in your own currency, and the credits are the dollar amount you chose. As the workspace's owner you can change your monthly cap; runs and replies stop at it, and it resets on the 1st (UTC).
 - **Sharing a thread.** In a thread, choose **Share**. Type someone's email address and choose **Share**: they can read the whole thread, including earlier prompts, and prompt in it. A thread can be shared with up to 10 people, and you can share with up to 20 people a day. They get an email from noreply@mg.swarm.app with a link to the thread, and must sign in with that email address to open it. Under **General access**, **Anyone with the link** gives you a link to copy instead: anyone who signs in with it can join, until it expires (7 days), you choose **Reset link** (which makes a new link and turns the old one off) or you switch back to **Private**. To remove someone, set their role to **Remove**. Threads shared with you are under **Shared with me** in the threads list; to leave one, open **Share** in it and choose **Leave thread**.
