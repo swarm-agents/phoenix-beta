@@ -1,6 +1,6 @@
 # Phoenix private beta: getting started
 
-Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, the Claude desktop app or Grok, as a connector with eleven tools. The steps below are for Claude Code; for the desktop app, see [Using Phoenix from the Claude desktop app](#using-phoenix-from-the-claude-desktop-app), and for Grok, [Using Phoenix from Grok](#using-phoenix-from-grok). Phoenix can also chat with one model at a time, from the connector or in your browser: see [Chat in threads](#chat-in-threads) and [Using Phoenix in your browser](#using-phoenix-in-your-browser).
+Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, the Claude desktop app or Grok, as a connector with seventeen tools. The steps below are for Claude Code; for the desktop app, see [Using Phoenix from the Claude desktop app](#using-phoenix-from-the-claude-desktop-app), and for Grok, [Using Phoenix from Grok](#using-phoenix-from-grok). Phoenix can also chat with one model at a time, from the connector or in your browser: see [Chat in threads](#chat-in-threads) and [Using Phoenix in your browser](#using-phoenix-in-your-browser).
 
 You need Claude Code installed and signed in (or the Claude desktop app, or a Grok account), and an invitation from the Phoenix team.
 
@@ -14,7 +14,7 @@ claude mcp add --transport http phoenix https://phoenix-staging-gzuqcv2lrq-ey.a.
 
 ## 2. Sign in
 
-Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 16 tools.
+Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 17 tools.
 
 ## 3. Get your beta credits
 
@@ -39,7 +39,7 @@ Ask Claude in plain words. It calls the tools for you:
 | `get_report` | Returns the finished report, short or full | No |
 | `buy_credits` | Returns a Stripe payment link for $10, $20 or $50 of credits; they're added once Stripe confirms the payment. It's a real card payment | Only if you pay |
 
-The other seven tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `list_threads`, `get_thread` and `rename_thread`, for chat (see [Chat in threads](#chat-in-threads)). `attach_file` adds a PDF, Word, Excel, CSV or text file to a prompt (see [Using Phoenix in your browser](#using-phoenix-in-your-browser)). Three more look after the apps connected to your account: `list_connections`, and `revoke_connection` and `allow_connection` for its owner. A revoked app is refused, even if it connects again, until you allow it.
+The other eleven tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `stop_reply`, `list_threads`, `get_thread` and `rename_thread`, for chat (see [Chat in threads](#chat-in-threads)). `attach_file` adds a PDF, Word, Excel, CSV or text file to a prompt (see [Using Phoenix in your browser](#using-phoenix-in-your-browser)). Three more look after the apps connected to your account: `list_connections`, and `revoke_connection` and `allow_connection` for its owner. A revoked app is refused, even if it connects again, until you allow it.
 
 For example:
 
@@ -217,6 +217,7 @@ Chat sends your message to one model and returns its whole reply. It suits a qui
 | Tool | What it does | Costs credits |
 |---|---|---|
 | `send_message` | Sends a message on the route you choose and returns the reply with its proof. Without a thread id it starts a new thread; with one, it continues that thread | Holds the route's "at most", then charges what the provider billed, rounded up to a whole cent |
+| `stop_reply` | Stops a reply of yours while it is being written. The part written so far is kept in the thread, marked stopped, and the `send_message` that was waiting returns it. Only the person who sent the reply can stop it | Charges what the provider billed for what was generated; until that is known, the hold stays held |
 | `list_threads` | Lists your threads, newest first, with each one's last model and what its replies were charged, and what all your threads were charged this calendar month (UTC), with how many of this month's costs are not known yet | No |
 | `get_thread` | Shows a thread's messages, oldest first, each reply with its proof | No |
 | `rename_thread` | Renames one of your threads (its owner only; a thread shared with you can't be renamed) | No |
