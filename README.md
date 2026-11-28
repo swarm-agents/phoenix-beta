@@ -1,6 +1,6 @@
 # Phoenix private beta: getting started
 
-Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, the Claude desktop app or Grok, as a connector with eighteen tools. The steps below are for Claude Code; for the desktop app, see [Using Phoenix from the Claude desktop app](#using-phoenix-from-the-claude-desktop-app), and for Grok, [Using Phoenix from Grok](#using-phoenix-from-grok). Phoenix can also chat with one model at a time, from the connector or in your browser: see [Chat in threads](#chat-in-threads) and [Using Phoenix in your browser](#using-phoenix-in-your-browser).
+Phoenix researches a question with a team of AI agents and returns a report in which every claim quotes the source page it came from. In this beta you use Phoenix from Claude Code, the Claude desktop app or Grok, as a connector with thirteen tools. The steps below are for Claude Code; for the desktop app, see [Using Phoenix from the Claude desktop app](#using-phoenix-from-the-claude-desktop-app), and for Grok, [Using Phoenix from Grok](#using-phoenix-from-grok). Phoenix can also chat with one model at a time, from the connector or in your browser: see [Chat in threads](#chat-in-threads) and [Using Phoenix in your browser](#using-phoenix-in-your-browser).
 
 You need Claude Code installed and signed in (or the Claude desktop app, or a Grok account), and an invitation from the Phoenix team.
 
@@ -14,7 +14,7 @@ claude mcp add --transport http phoenix https://phoenix-staging-gzuqcv2lrq-ey.a.
 
 ## 2. Sign in
 
-Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 18 tools.
+Start Claude Code, type `/mcp`, choose `phoenix` and then authenticate. Your browser opens the Phoenix sign-in page; sign in there and return to Claude Code. `/mcp` then shows `phoenix` as connected, with 20 tools: the thirteen below and seven older names that still work for now.
 
 ## 3. Get your beta credits
 
@@ -32,14 +32,15 @@ Ask Claude in plain words. It calls the tools for you:
 
 | Tool | What it does | Costs credits |
 |---|---|---|
-| `whoami` | Shows your account id, your balance, this connection's monthly limit and how much of it is left, and your per-run limit | No |
+| `whoami` | Shows your account id, your balance, this connection's monthly limit and how much of it is left, your per-run limit, and the apps connected to your account | No |
 | `estimate_run` | Checks a budget against your balance and limits, and says whether a run would start | No |
 | `start_run` | Starts a run on your question with the budget you give, and returns a run id | Holds the budget |
-| `check_run` | Shows a run's progress and spend so far | No |
-| `get_report` | Returns the finished report, short or full | No |
+| `get_run` | Shows a run's progress and spend so far, and the report once it's finished, short or full | No |
 | `buy_credits` | Returns a Stripe payment link for $10, $20 or $50 of credits; they're added once Stripe confirms the payment. It's a real card payment | Only if you pay |
 
-The other twelve tools: `check_models` (see [Templates](#templates)), `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes)), and `send_message`, `stop_reply`, `list_threads`, `get_thread` and `rename_thread`, for chat (see [Chat in threads](#chat-in-threads)). `export_thread` saves a thread as a Markdown file (see [Exporting a thread](#exporting-a-thread)). `attach_file` adds a PDF, Word, Excel, CSV or text file, or a PNG, JPEG or WebP image, to a prompt (see [Using Phoenix in your browser](#using-phoenix-in-your-browser)). Three more look after the apps connected to your account: `list_connections`, and `revoke_connection` and `allow_connection` for its owner. A revoked app is refused, even if it connects again, until you allow it.
+The other eight tools: `plan_route` (see [Plan where a prompt goes](#plan-where-a-prompt-goes), and [Templates](#templates) for checking models against rules), and `send_message`, `stop_reply`, `list_threads`, `get_thread` and `rename_thread`, for chat (see [Chat in threads](#chat-in-threads)). `get_thread` also saves a thread as a Markdown file (see [Exporting a thread](#exporting-a-thread)). `attach_file` adds a PDF, Word, Excel, CSV or text file, or a PNG, JPEG or WebP image, to a prompt (see [Using Phoenix in your browser](#using-phoenix-in-your-browser)). `set_connection` revokes an app connected to your account, or allows it again, for the account's owner; `whoami` lists the apps. A revoked app is refused, even if it connects again, until you allow it.
+
+Seven older tool names still work for now, and each says which tool to use instead: `check_run` and `get_report` (now `get_run`), `export_thread` (now `get_thread`), `list_connections` (now `whoami`), `revoke_connection` and `allow_connection` (now `set_connection`), and `check_models` (now `plan_route`). They go in the next update of this guide.
 
 For example:
 
@@ -93,7 +94,7 @@ Each run follows a fixed plan: one call splits your question into topics and que
 
 ## What you'll see
 
-`check_run` and `get_report` show the run's state, one of:
+`get_run` shows the run's state, one of:
 
 | State | Meaning |
 |---|---|
@@ -135,7 +136,7 @@ The report starts with your question, the budget, the spend, the run time and ho
 
 Every run keeps a step-by-step record of how Phoenix researched your question, built from the run's own records: what it planned, which agents it sent, what each agent found, what the independent check confirmed, which disagreements it found and how they were settled, and why it stopped. Each step has the minute it happened, counted from the start of the run.
 
-- While a run is going, `check_run` shows the latest few steps.
+- While a run is going, `get_run` shows the latest few steps.
 - The short report sums up the process in a few lines.
 - The full report ends with a section called "How this research was done" that lists the steps. A very long run shows its first and last steps and says how many are not shown.
 
@@ -154,7 +155,7 @@ Each step is one of these kinds:
 
 ## Templates
 
-Ask your assistant which AI models meet a set of rules, and it calls Phoenix's `check_models` tool. Phoenix keeps a catalogue of models and the hosts that run them, and checks them against one of five templates or rules you give:
+Ask your assistant which AI models meet a set of rules, and it calls Phoenix's `plan_route` tool with an empty prompt. Phoenix keeps a catalogue of models and the hosts that run them, and checks them against one of five templates or rules you give:
 
 - EU processing (`eu_processing`): Your requests are processed only inside the EU.
 - Confidential (`confidential`): The host neither trains on your data nor keeps it.
@@ -180,7 +181,7 @@ Phoenix answers with three choices, each with the model, the host that would run
 - **Cheapest**: the lowest price that passes your rules.
 - **Private**: the cheapest host that neither trains on your data nor keeps it.
 
-Each price is the most the call can cost: every token of your prompt plus the longest reply you allow, rounded up to a whole cent. For each model left out, Phoenix says which rule left it out. It also lists every other model and host that passes, with the most each could cost, cheapest first, so you can choose one yourself. You can add a template or your own rules, as with `check_models`.
+Each price is the most the call can cost: every token of your prompt plus the longest reply you allow, rounded up to a whole cent. For each model left out, Phoenix says which rule left it out. It also lists every other model and host that passes, with the most each could cost, cheapest first, so you can choose one yourself. You can add a template or your own rules (see [Templates](#templates)).
 
 `plan_route` is free. It calls no model and sends your prompt nowhere, and Phoenix neither stores nor logs the prompt. Given a thread, it prices your message as it would be sent in that thread, with the thread's recent messages.
 
@@ -219,9 +220,8 @@ Chat sends your message to one model and returns its whole reply. It suits a qui
 | `send_message` | Sends a message on the route you choose and returns the reply with its proof. Without a thread id it starts a new thread; with one, it continues that thread | Holds the route's "at most", then charges what the provider billed, rounded up to a whole cent |
 | `stop_reply` | Stops a reply of yours while it is being written. The part written so far is kept in the thread, marked stopped, and the `send_message` that was waiting returns it. Only the person who sent the reply can stop it | Charges what the provider billed for what was generated; until that is known, the hold stays held |
 | `list_threads` | Lists your threads, newest first, with each one's last model and what its replies were charged, and what all your threads were charged this calendar month (UTC), with how many of this month's costs are not known yet | No |
-| `get_thread` | Shows a thread's messages, oldest first, each reply with its proof | No |
+| `get_thread` | Shows a thread's messages, oldest first, each reply with its proof; with `format` set to `markdown`, returns the thread as a Markdown file (see [Exporting a thread](#exporting-a-thread)) | No |
 | `rename_thread` | Renames one of your threads (its owner only; a thread shared with you can't be renamed) | No |
-| `export_thread` | Returns a thread as a Markdown file, as you can read it now (see [Exporting a thread](#exporting-a-thread)) | No |
 
 How a message is charged:
 
@@ -249,7 +249,7 @@ Ask your assistant, for example:
 
 ## Exporting a thread
 
-You can save a thread as a file to keep or share outside Phoenix. In the web app, open the thread's menu and choose **Export**, then **Markdown** (a .md file) or **PDF** (Phoenix opens a print view; in the print window, choose Save as PDF). From the connector, ask your assistant to use `export_thread`, which returns Markdown.
+You can save a thread as a file to keep or share outside Phoenix. In the web app, open the thread's menu and choose **Export**, then **Markdown** (a .md file) or **PDF** (Phoenix opens a print view; in the print window, choose Save as PDF). From the connector, ask your assistant to use `get_thread` with `format` set to `markdown`.
 
 - **What it holds.** The title, each message with who wrote it and when, and every answer, with partial answers marked. Attached files and images are listed by name only. Exporting costs nothing.
 - **Receipts, optional.** Under each answer, its model, host, estimate and charge, and the thread's total at the end. They are on by default; turn **Include receipts** off for a plain copy (`receipts` set to false in the connector).
